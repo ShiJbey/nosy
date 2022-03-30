@@ -53,11 +53,11 @@ attribute_name:
 
 constant: BOOLEAN | NUMBER | STRING;
 
-pred_expr: '[' '(' pred fn_arg+ ')' ']';
+range_predicate: '[' '(' range_predicate_symbol fn_arg+ ')' ']';
 
-pred: (SYMBOL ('_' SYMBOL)*) | range_predicate;
+range_predicate_symbol: '=' | '!=' | '<=' | '<' | '>' | '>=';
 
-range_predicate: '=' | '!=' | '<=' | '<' | '>' | '>=';
+pred_expr: range_predicate;
 
 fn_expr: '[' '(' fn fn_arg+ ')' binding ']';
 
