@@ -41,15 +41,14 @@ clause:
 	| or_join_clause
 	| expression_clause;
 
-data_pattern:
-	'[' (variable | constant | '_') attribute_name (
-		variable
-		| constant
-		| '_'
-	) ']';
+data_pattern: '[' entity_spec attribute_name value_spec ']';
+
+entity_spec: variable | UINT | '_';
+
+value_spec: variable | constant | '_';
 
 attribute_name:
-	':' (SYMBOL ('_' SYMBOL)*) ('/' SYMBOL ('_' SYMBOL)*)*;
+	':'? (SYMBOL ('_' SYMBOL)*) ('/' SYMBOL ('_' SYMBOL)*)*;
 
 constant: BOOLEAN | NUMBER | STRING;
 
@@ -71,12 +70,14 @@ bind_tuple: '[' (variable | '_')+ ']';
 
 NUMBER: INT | INT '.' [0-9]* [1-9];
 
+UINT: [1-9][0-9];
+
 INT: '0' | '-'? [1-9][0-9]*;
 
 BOOLEAN: 'True' | 'False';
 
 STRING: '"' ([ -~])* '"';
 
-SYMBOL: [a-zA-Z]+;
+SYMBOL: [a-zA-Z][a-zA-Z0-9_]*;
 
 WS: [ \t\r\n]+ -> skip;
